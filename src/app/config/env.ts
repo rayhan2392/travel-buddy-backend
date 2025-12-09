@@ -5,12 +5,18 @@ dotenv.config()
 interface EnvConfig {
     PORT: string,
     DB_URL: string,
-    NODE_ENV: "development" | "production"
+    NODE_ENV: "development" | "production",
+    BCRYPT_SALT_ROUND: string,
+    JWT_ACCESS_SECRET: string,
+    JWT_ACCESS_EXPIRES: string,
+    CLOUDINARY_CLOUD_NAME: string,
+    CLOUDINARY_API_KEY: string,
+    CLOUDINARY_API_SECRET: string,
+
 }
 
 const loadEnvVariables = (): EnvConfig => {
-    const requiredEnvVariables: string[] = ["PORT", "DB_URL", "NODE_ENV"];
-
+    const requiredEnvVariables: string[] = ["PORT", "DB_URL", "NODE_ENV", "BCRYPT_SALT_ROUND", "JWT_ACCESS_SECRET", "JWT_ACCESS_EXPIRES", "CLOUDINARY_CLOUD_NAME", "CLOUDINARY_API_KEY", "CLOUDINARY_API_SECRET"];
     requiredEnvVariables.forEach(key => {
         if (!process.env[key]) {
             throw new Error(`Missing require environment variabl ${key}`)
@@ -21,7 +27,13 @@ const loadEnvVariables = (): EnvConfig => {
         PORT: process.env.PORT as string,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         DB_URL: process.env.DB_URL!,
-        NODE_ENV: process.env.NODE_ENV as "development" | "production"
+        NODE_ENV: process.env.NODE_ENV as "development" | "production",
+        BCRYPT_SALT_ROUND: process.env.BCRYPT_SALT_ROUND as string,
+        JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET as string,
+        JWT_ACCESS_EXPIRES: process.env.JWT_ACCESS_EXPIRES as string,
+        CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME as string,
+        CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY as string,
+        CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET as string,
     }
 }
 

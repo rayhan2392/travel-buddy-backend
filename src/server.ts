@@ -3,6 +3,7 @@ import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app";
 import { envVars } from "./app/config/env";
+import { ensureUploadDir } from "./app/utils/unsureUploadDir";
 
 
 let server: Server;
@@ -13,6 +14,8 @@ const startServer = async () => {
         await mongoose.connect(envVars.DB_URL)
 
         console.log("Connected to DB!!");
+        // Ensure uploads directory exists
+        await ensureUploadDir();
 
         server = app.listen(envVars.PORT, () => {
             console.log(`Server is listening to port ${envVars.PORT}`);

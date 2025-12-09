@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema<IUser>(
         },
 
         profileImage: { type: String },
+        photo_name: { type: String },
         bio: { type: String },
         interests: [{ type: String }], // ["hiking", "food tours"]
         visitedCountries: [{ type: String }],
@@ -26,7 +27,7 @@ const userSchema = new mongoose.Schema<IUser>(
 
         isVerified: { type: Boolean, default: false }, // after subscription
     },
-    { timestamps: true }
+    { timestamps: true,versionKey:false }
 );
 
 export const User = model<IUser>("User", userSchema)

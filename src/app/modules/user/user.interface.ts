@@ -8,6 +8,7 @@ export interface IUser {
     role: "user" | "admin";
 
     profileImage?: string;
+    photo_name?: string;
     bio?: string;
     interests?: string[];
     visitedCountries?: string[];
