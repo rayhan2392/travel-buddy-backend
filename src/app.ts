@@ -4,14 +4,12 @@ import notFound from "./app/middlewares/notFound";
 import router from "./app/routes";
 import cors from 'cors'
 import cookieParser from "cookie-parser";
-import { envVars } from "./app/config/env";
-
 const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-    origin: envVars.FRONTEND_URL,
+    origin: ["https://travel-buddy-backend-omega.vercel.app", "http://localhost:3000"],
     credentials: true
 }))
 

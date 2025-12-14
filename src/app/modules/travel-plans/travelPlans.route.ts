@@ -11,7 +11,7 @@ router.get('/my', checkAuth('user', 'admin'), TravelPlansController.getMyTravelP
 router.get('/joined', checkAuth('user', 'admin'), TravelPlansController.getJoinedTravelPlans)
 router.get('/past-joined', checkAuth('user', 'admin'), TravelPlansController.getPastJoinedTravelPlans)
 router.patch('/:id', checkAuth('user', 'admin'), TravelPlansController.updateTravelPlan)
-router.delete('/:id', checkAuth('user'), TravelPlansController.deleteTravelPlan)
+router.delete('/:id', checkAuth('user', 'admin'), TravelPlansController.deleteTravelPlan)
 router.post('/:id/join', checkAuth('user'), TravelPlansController.joinTravelPlan)
 router.post('/:id/leave', checkAuth('user'), TravelPlansController.leaveTravelPlan)
 router.get('/match', TravelPlansController.matchTravelPlans)
