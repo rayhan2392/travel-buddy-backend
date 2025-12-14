@@ -1,9 +1,6 @@
 import { Router } from 'express'
 import { TravelPlansController } from './travelPlans.controller'
 import { checkAuth } from '../../middlewares/checkAuth'
-import { ReviewsController } from '../reviews/reviews.controller'
-import { validateRequest } from '../../middlewares/validateRequest'
-import { createReviewSchema } from '../reviews/review.validation'
 
 const router = Router()
 
@@ -11,14 +8,13 @@ const router = Router()
 router.post('/', checkAuth('user', 'admin'), TravelPlansController.createTravelPlan)
 router.get('/', TravelPlansController.getAllTravelPlans)
 router.get('/my', checkAuth('user', 'admin'), TravelPlansController.getMyTravelPlans)
+router.get('/joined', checkAuth('user', 'admin'), TravelPlansController.getJoinedTravelPlans)
+router.get('/past-joined', checkAuth('user', 'admin'), TravelPlansController.getPastJoinedTravelPlans)
 router.patch('/:id', checkAuth('user', 'admin'), TravelPlansController.updateTravelPlan)
 router.delete('/:id', checkAuth('user'), TravelPlansController.deleteTravelPlan)
 router.post('/:id/join', checkAuth('user'), TravelPlansController.joinTravelPlan)
 router.post('/:id/leave', checkAuth('user'), TravelPlansController.leaveTravelPlan)
 router.get('/match', TravelPlansController.matchTravelPlans)
-// Reviews for a travel plan (plan-scoped endpoints)
-router.post('/:id/reviews', checkAuth('user'), validateRequest(createReviewSchema), ReviewsController.createReview)
-router.get('/:id/reviews', ReviewsController.getReviewsByPlan)
 
 // Single travel plan
 router.get('/:id', TravelPlansController.getSingleTravelPlan)

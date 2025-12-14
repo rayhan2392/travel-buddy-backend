@@ -20,7 +20,7 @@ const createReview = async (travelPlanId: string, userId: string, payload: { rat
     const now = new Date()
     if (plan.endDate && now < plan.endDate) throw new AppError(httpStatus.BAD_REQUEST, 'Cannot review before trip end date')
 
-    const review = await Review.create({ host: userId, travelPlan: travelPlanId, rating: payload.rating, comment: payload.comment })
+    const review = await Review.create({ reviewer: userId, travelPlan: travelPlanId, rating: payload.rating, comment: payload.comment })
 
     // recompute host ratings (the host of the travel plan is plan.host)
     await recomputeHostRating(plan.host?.toString())
@@ -33,7 +33,7 @@ const getReviewsByPlan = async (travelPlanId: string, page = 1, limit = 20) => {
 
     const filter = { travelPlan: travelPlanId }
     const total = await Review.countDocuments(filter)
-    const data = await Review.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('host', 'fullName profileImage')
+    const data = await Review.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).populate('reviewer', 'fullName profileImage')
     const pages = Math.ceil(total / limit)
     return { meta: { total, page, limit, pages }, data }
 }
@@ -41,7 +41,7 @@ const getReviewsByPlan = async (travelPlanId: string, page = 1, limit = 20) => {
 const updateReview = async (reviewId: string, userId: string, payload: { rating?: number; comment?: string }) => {
     const review = await Review.findById(reviewId)
     if (!review) throw new AppError(httpStatus.NOT_FOUND, 'Review not found')
-    if (review.host?.toString() !== userId) throw new AppError(httpStatus.FORBIDDEN, 'Not allowed to update this review')
+    if (review.reviewer?.toString() !== userId) throw new AppError(httpStatus.FORBIDDEN, 'Not allowed to update this review')
 
     const updated = await Review.findByIdAndUpdate(reviewId, payload, { new: true, runValidators: true })
 
@@ -55,7 +55,7 @@ const updateReview = async (reviewId: string, userId: string, payload: { rating?
 const deleteReview = async (reviewId: string, userId: string) => {
     const review = await Review.findById(reviewId)
     if (!review) throw new AppError(httpStatus.NOT_FOUND, 'Review not found')
-    if (review.host?.toString() !== userId) throw new AppError(httpStatus.FORBIDDEN, 'Not allowed to delete this review')
+    if (review.reviewer?.toString() !== userId) throw new AppError(httpStatus.FORBIDDEN, 'Not allowed to delete this review')
 
     const deleted = await Review.findByIdAndDelete(reviewId)
 

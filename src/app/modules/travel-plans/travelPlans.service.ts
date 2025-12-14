@@ -34,6 +34,28 @@ const getUserTravelPlans = async (userId: string) => {
     return plans
 }
 
+const getJoinedTravelPlans = async (userId: string) => {
+    const today = new Date()
+    const plans = await TravelPlan.find({
+        participants: userId,
+        endDate: { $gte: today }
+    })
+        .sort({ startDate: 1 })
+        .populate('host', 'fullName email profileImage')
+    return plans
+}
+
+const getPastJoinedTravelPlans = async (userId: string) => {
+    const today = new Date()
+    const plans = await TravelPlan.find({
+        participants: userId,
+        endDate: { $lt: today }
+    })
+        .sort({ endDate: -1 })
+        .populate('host', 'fullName email profileImage')
+    return plans
+}
+
 const updateTravelPlan = async (id: string, payload: Partial<ITravelPlan>) => {
     const plan = await TravelPlan.findById(id)
     if (!plan) {
@@ -114,6 +136,8 @@ export const TravelPlansService = {
     getAllTravelPlans,
     getSingleTravelPlan,
     getUserTravelPlans,
+    getJoinedTravelPlans,
+    getPastJoinedTravelPlans,
     updateTravelPlan,
     deleteTravelPlan,
     joinTravelPlan,

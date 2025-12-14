@@ -52,6 +52,30 @@ const getMyTravelPlans = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
+const getJoinedTravelPlans = catchAsync(async (req: Request, res: Response) => {
+    const decoded = req.user as any
+    const userId = decoded?.userId
+    const plans = await TravelPlansService.getJoinedTravelPlans(userId)
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Joined travel plans retrieved successfully',
+        data: plans,
+    })
+})
+
+const getPastJoinedTravelPlans = catchAsync(async (req: Request, res: Response) => {
+    const decoded = req.user as any
+    const userId = decoded?.userId
+    const plans = await TravelPlansService.getPastJoinedTravelPlans(userId)
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Past joined travel plans retrieved successfully',
+        data: plans,
+    })
+})
+
 const updateTravelPlan = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params
     const updated = await TravelPlansService.updateTravelPlan(id, req.body)
@@ -136,6 +160,8 @@ export const TravelPlansController = {
     getAllTravelPlans,
     getSingleTravelPlan,
     getMyTravelPlans,
+    getJoinedTravelPlans,
+    getPastJoinedTravelPlans,
     updateTravelPlan,
     deleteTravelPlan,
     joinTravelPlan,

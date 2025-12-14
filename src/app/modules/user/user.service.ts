@@ -75,11 +75,14 @@ const updateMyProfile = async (userId: string, payload: Partial<IUser> & { file?
                 'Failed to upload image'
             );
         }
-
-        const updatedUser = await User.findByIdAndUpdate(userId, payload, { new: true, runValidators: true })
-
-        return updatedUser;
     }
+
+    // Remove file property before updating (not part of User schema)
+    delete payload.file;
+
+    const updatedUser = await User.findByIdAndUpdate(userId, payload, { new: true, runValidators: true })
+
+    return updatedUser;
 
 }
 

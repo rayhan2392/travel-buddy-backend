@@ -54,9 +54,7 @@ const getSingleUser = catchAsync(async (req: Request, res: Response, next: NextF
 const getMyProfile = catchAsync(async (req: Request, res: Response, nex: NextFunction) => {
 
     const userId = req.user.userId;
-    console.log("request from controller",userId);
     const user = await User.findById(userId)
-    console.log("user from controller",user);
 
     sendResponse(res, {
         statusCode: 201,
@@ -82,7 +80,6 @@ const updateMyProfile = catchAsync(
 
     const decodedToken = req.user as JwtPayload;
     const user = await UserService.updateMyProfile(decodedToken.userId, payload);
-    console.log("user from controller", user);
 
     sendResponse(res, {
       success: true,
