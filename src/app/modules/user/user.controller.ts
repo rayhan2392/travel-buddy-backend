@@ -68,26 +68,26 @@ const getMyProfile = catchAsync(async (req: Request, res: Response, nex: NextFun
 })
 
 const updateMyProfile = catchAsync(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async (req: Request, res: Response, next: NextFunction) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async (req: Request, res: Response, next: NextFunction) => {
 
 
 
-    const payload: IUser = {
-      ...req.body,
-      file: req.file
+        const payload: IUser = {
+            ...req.body,
+            file: req.file
+        }
+
+        const decodedToken = req.user as JwtPayload;
+        const user = await UserService.updateMyProfile(decodedToken.userId, payload);
+
+        sendResponse(res, {
+            success: true,
+            statusCode: 200,
+            message: 'Profile updated successfully from controller',
+            data: user
+        });
     }
-
-    const decodedToken = req.user as JwtPayload;
-    const user = await UserService.updateMyProfile(decodedToken.userId, payload);
-
-    sendResponse(res, {
-      success: true,
-      statusCode: 200,
-      message: 'Profile updated successfully from controller',
-      data: user
-    });
-  }
 );
 
 

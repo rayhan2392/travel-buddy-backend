@@ -14,7 +14,7 @@ export const checkAuth =
         const authHeader = req.headers.authorization;
         const cookieToken = req.cookies?.accessToken;
 
-        
+
 
         if (!authHeader && !cookieToken) {
           throw new AppError(403, 'No Token Received');
@@ -26,10 +26,10 @@ export const checkAuth =
           // If authorization header exists and starts with "Bearer "
           if (authHeader.startsWith('Bearer ')) {
             accessToken = authHeader.split(' ')[1];
-            
+
           } else {
             accessToken = authHeader;
-            
+
           }
         }
 
