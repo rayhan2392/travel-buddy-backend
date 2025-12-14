@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 export const seedSuperAdmin = async () => {
     try {
         const isSuperAdminExist = await User.findOne({ email: envVars.SUPER_ADMIN_EMAIL })
-        
+
         if (isSuperAdminExist) {
             console.log('Super Admin exists')
             return;
@@ -23,13 +23,13 @@ export const seedSuperAdmin = async () => {
             fullName: 'Super Admin',
             email: envVars.SUPER_ADMIN_EMAIL,
             password: hashedPassword,
-            role:"admin",
+            role: "admin",
 
         }
 
-        const superadmin = await User.create(payload)
+        await User.create(payload)
         console.log('Super admin successfully created /n')
-        
+
 
     } catch (error) {
         console.log(error)

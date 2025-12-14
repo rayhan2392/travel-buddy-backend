@@ -1,25 +1,26 @@
 import mongoose from 'mongoose';
-import app from './app';
-import { envVars } from './app/config/env';
+import { envVars } from '../app/config/env';
+import app from '../app';
+
 
 let isConnected = false;
 
 const connectDB = async () => {
-  if (isConnected) {
-    return;
-  }
+    if (isConnected) {
+        return;
+    }
 
-  try {
-    await mongoose.connect(envVars.DB_URL);
-    isConnected = true;
-    console.log('MongoDB connected');
-  } catch (error) {
-    console.error('MongoDB connection error:', error);
-    throw error;
-  }
+    try {
+        await mongoose.connect(envVars.DB_URL);
+        isConnected = true;
+        console.log('MongoDB connected');
+    } catch (error) {
+        console.error('MongoDB connection error:', error);
+        throw error;
+    }
 };
 
 export default async (req: any, res: any) => {
-  await connectDB();
-  return app(req, res);
+    await connectDB();
+    return app(req, res);
 };
