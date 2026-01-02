@@ -80,6 +80,8 @@ const deleteTravelPlan = async (id: string) => {
     return deleted
 }
 
+// This method is now deprecated - use JoinRequestsService. createJoinRequest instead
+
 const joinTravelPlan = async (id: string, userId: string) => {
     const plan = await TravelPlan.findById(id)
     if (!plan) {

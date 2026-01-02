@@ -3,6 +3,8 @@ import { UserRoutes } from "../modules/user/user.route";
 import { AuthRoutes } from "../modules/auth/auth.route";
 import { TravelPlansRoutes } from "../modules/travel-plans/travelPlans.route";
 import { ReviewsRoutes } from "../modules/reviews/reviews.route";
+import { JoinRequestsRoutes } from "../modules/join-requests/joinRequests.route";
+import { PaymentRoutes } from "../modules/payment/payment.route";
 
 const router = Router();
 
@@ -25,6 +27,15 @@ const moduleRoutes = [
     {
         path: "/reviews",
         route: ReviewsRoutes
+    }
+    ,
+    {
+        path: "/join-requests",
+        route: JoinRequestsRoutes
+    },
+    {
+        path: "/payment",
+        route: PaymentRoutes
     }
 ]
 
