@@ -15,20 +15,6 @@ const sslPaymentInit = async (payload: ISSLCommerz) => {
             success_url: `${envVars.SSL_SUCCESS_BACKEND_URL}?transactionId=${payload.transactionId}&amount=${payload.amount}&status=success`,
             fail_url: `${envVars.SSL_FAIL_BACKEND_URL}?transactionId=${payload.transactionId}&amount=${payload.amount}&status=fail`,
             cancel_url: `${envVars.SSL_CANCEL_BACKEND_URL}?transactionId=${payload.transactionId}&amount=${payload.amount}&status=cancel`,
-
-        };
-
-        // eslint-disable-next-line no-console
-        console.log('🔍 SSL Commerz URLs being sent:');
-        // eslint-disable-next-line no-console
-        console.log('Success URL:', data.success_url);
-        // eslint-disable-next-line no-console
-        console.log('Fail URL:', data.fail_url);
-        // eslint-disable-next-line no-console
-        console.log('Cancel URL:', data.cancel_url);
-
-        const dataToSend = {
-            ...data,
             // ipn_url: "http://localhost:3030/ipn",
             shipping_method: 'N/A',
             product_name: 'Tour',
@@ -56,7 +42,7 @@ const sslPaymentInit = async (payload: ISSLCommerz) => {
         const response = await axios({
             method: 'POST',
             url: envVars.SSL_PAYMENT_API,
-            data: new URLSearchParams(dataToSend as any).toString(),
+            data: new URLSearchParams(data as any).toString(),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         });
 
