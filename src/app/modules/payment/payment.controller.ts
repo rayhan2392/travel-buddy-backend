@@ -40,6 +40,7 @@ const successPayment = catchAsync(async (req: Request, res: Response) => {
 
     if (result.success) {
         res.redirect(
+            303,
             `${envVars.SSL_SUCCESS_FRONTEND_URL}?transactionId=${query.transactionId}&message=${result.message}&amount=${query.amount}&status=${query.status}`
         );
     }
@@ -53,6 +54,7 @@ const failPayment = catchAsync(async (req: Request, res: Response) => {
 
     if (!result.success) {
         res.redirect(
+            303,
             `${envVars.SSL_FAIL_FRONTEND_URL}?transactionId=${query.transactionId}&message=${result.message}&amount=${query.amount}&status=${query.status}`
         );
     }
@@ -66,6 +68,7 @@ const cancelPayment = catchAsync(async (req: Request, res: Response) => {
 
     if (!result.success) {
         res.redirect(
+            303,
             `${envVars.SSL_CANCEL_FRONTEND_URL}?transactionId=${query.transactionId}&message=${result.message}&amount=${query.amount}&status=${query.status}`
         );
     }
