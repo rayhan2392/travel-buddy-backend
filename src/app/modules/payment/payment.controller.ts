@@ -24,6 +24,15 @@ const initPayment = catchAsync(async (req: Request, res: Response) => {
 });
 
 const successPayment = catchAsync(async (req: Request, res: Response) => {
+    // eslint-disable-next-line no-console
+    console.log('✅ SUCCESS PAYMENT ENDPOINT HIT');
+    // eslint-disable-next-line no-console
+    console.log('Method:', req.method);
+    // eslint-disable-next-line no-console
+    console.log('Query:', req.query);
+    // eslint-disable-next-line no-console
+    console.log('Body:', req.body);
+
     const query = req.query;
     const result = await PaymentService.successPayment(
         query as Record<string, string>
